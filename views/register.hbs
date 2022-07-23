@@ -1,0 +1,13 @@
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form action="/auth/register" method="post">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+            <input type="text" class="form-control mb-2" name="userName" placeholder="Ingrese nombre" value="jps@gmail.com">
+            <input type="text" class="form-control mb-2" name="email" placeholder="Ingrese E-mail" value="jps@gmail.com">
+            <input type="password" class="form-control mb-2" name="password" placeholder="Ingrese Contraseña" value="qwerty">
+            <input type="password" class="form-control mb-2" name="repassword" placeholder="Repita contraseña" value="qwerty">
+            <button class="btn btn-primary" type="submit"> registrar Usuario</button>
+        </form>
+    </div>
+</div>

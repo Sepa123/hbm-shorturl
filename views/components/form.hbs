@@ -1,0 +1,18 @@
+ {{#if urle}}
+    <form action="/editar/{{urle._id}}" method="post">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+        <input type="text" placeholder="Ingrese una Url" name="origin" class="form-control my-2" id="origin" value="{{urle.origin}}">
+        <button type="submit" class="btn btn-warning w-100 mb-2">Editar Url</button>
+    </form>
+
+    {{else}}
+
+    <form action="/" method="post">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+        <input type="text" placeholder="Ingrese una Url" name="origin" class="form-control my-2" id="origin">
+        <button type="submit" class="btn btn-primary w-100 mb-2">Agregar Url</button>
+    </form>
+
+  {{/if }}
+
+
