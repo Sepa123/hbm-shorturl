@@ -45,7 +45,7 @@ const registerUser = async(req,res) => {
             from: '"Fred Foo 👻" <foo@example.com>', // sender address
             to: usuario.email, // list of receivers
             subject: "Verifica tu cuenta de correo", // Subject line
-            html: `<a href="${process.env.PATHEROKU || "http://localhost:5000" }/auth/confirmar/${usuario.tokenConfirm}" >Verifica tu cuenta aqui</a>`, // html body
+            html: `<a href="${process.env.PATHEROKU || "http://localhost:5000" }auth/confirmar/${usuario.tokenConfirm}" >Verifica tu cuenta aqui</a>`, // html body
           });
         //res.json(usuario);
 
