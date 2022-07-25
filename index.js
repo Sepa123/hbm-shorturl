@@ -1,23 +1,43 @@
 const { urlencoded } = require("express");
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const cors = require("cors");
 const flash = require("connect-flash");
 const passport = require("passport");
 const user = require("./models/user");
 const csrf = require("csurf");
+const mongoSanitize = require('express-mongo-sanitize');
 const {create} = require("express-handlebars");
 require('dotenv').config();
-require('./database/db.js');
+//require('./database/db.js');
+const clientDB = require("./database/db");
+
 
 const app = express();
 
+const corsOption ={
+    credentials: true,
+    origin: process.env.PATHEROKU || "*",
+    method: ["GET","POST"],
+};
+
+
+app.use(cors())
+
 app.use(session({
-    secret: "keyboard cat",
+    secret: process.env.SECRETSESSION,
     resave: false,
     saveUninitialized: false,
-    name: "secret-name"
-
+    name: "session-user",
+    store: MongoStore.create({
+        clientPromise: clientDB,
+        dbName: process.env.DBNAME,
+    }), 
+    cookie: { secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 },
 }));
+
+//{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"passport":{"user":{"id":"62db2b29ca36fb9ad956a654","userName":"blacky@gmail.com"}},"csrfSecret":"N0MWmxv3PxjEEhfYWixKuzE9","flash":{}}
 
 app.use(flash());
 
@@ -61,6 +81,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended:true}));
 
 app.use(csrf());
+app.use(mongoSanitize());
+
 app.use((req,res,next) =>{
     res.locals.csrfToken = req.csrfToken();
     res.locals.mensajes = req.flash("mensajes");
